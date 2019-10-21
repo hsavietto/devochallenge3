@@ -1,6 +1,6 @@
 package hsavietto.devochallenge3;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Helder Savietto (helder.savietto@gmail.com)
@@ -13,7 +13,8 @@ public class TfIdfCalculator {
      * @param terms
      * @return
      */
-    public double calculateTfIdf(List<DocumentCorpus> fullCorpus, DocumentCorpus documentCorpus, List<String> terms) {
+    public double calculateTfIdf(
+            Collection<DocumentCorpus> fullCorpus, DocumentCorpus documentCorpus, Collection<String> terms) {
         double tfIdf = 0.0;
 
         for (String term : terms) {
@@ -45,7 +46,7 @@ public class TfIdfCalculator {
      * @param term
      * @return
      */
-    private double calculateTermInverseDocumentFrequency(List<DocumentCorpus> fullCorpus, String term) {
+    private double calculateTermInverseDocumentFrequency(Collection<DocumentCorpus> fullCorpus, String term) {
         long appearances = fullCorpus.stream().filter(corpus -> corpus.countTerm(term) > 0).count();
 
         if (appearances == 0) {

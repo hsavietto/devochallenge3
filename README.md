@@ -29,3 +29,24 @@ For example: ./tdIdf -d dir -n 5 -p 300 -t &quot;password try again&quot; ...<br
 Result examples:<br>
 doc1.txt 0.78<br>
 doc73.txt 0.76<br>
+
+* Build instructions
+
+At the root of the project directory, execute the command "mvn clean package". The executable jar will be
+created at the "target" directory.
+
+* Running the demo
+
+To run the demo, execute the command "java -jar <jar_file_name> <args...> at the directory where the generated jar
+file is.
+Some demo data files are included at the directory /data
+
+* Complexity analysis
+
+CorpusBuilder has complexity O(n), it's a simple loop reading each line and from each line each word and adding to the
+document corpus.
+
+DocumentCorpus has complexity O(1) for term insertion and term counting, and complexity O(n) for counting total terms.
+
+TfIdfCalculator has complexity O(n) for computing the tf-idf of each term.
+    
