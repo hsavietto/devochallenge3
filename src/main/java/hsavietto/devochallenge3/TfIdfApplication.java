@@ -46,6 +46,12 @@ class TfIdfApplication {
      */
     private boolean scanNewDocuments() {
         File[] files = docsDir.listFiles();
+
+        if(files == null) {
+            System.err.println("Error listing files in directory \"" + docsDir.getAbsolutePath() + "\"");
+            return false;
+        }
+
         boolean changed = false;
 
         for (File file : files) {
@@ -55,7 +61,7 @@ class TfIdfApplication {
                     fullCorpus.put(file, fileCorpus);
                     changed = true;
                 } catch (IOException e) {
-                    System.out.println("Error processing corpus of file \"" + file.getAbsolutePath() + "\"");
+                    System.err.println("Error processing corpus of file \"" + file.getAbsolutePath() + "\"");
                     excludedFiles.add(file);
                 }
             }
@@ -75,7 +81,7 @@ class TfIdfApplication {
             currentRank.add(new Pair<>(entry.getKey(), tfIdf));
         }
 
-        currentRank.sort(Comparator.comparingDouble(Pair::getValue));
+        currentRank.sort(Comparator.comparingDouble(Pair<File, Double>::getValue).reversed());
     }
 
     /**
@@ -89,9 +95,10 @@ class TfIdfApplication {
 
         System.out.println("tf-idf rank:");
 
-        for (Pair<File, Double> rankEntry : currentRank) {
-            System.out.println(String.format("%s\t%s", rankEntry.getKey().getName(), rankEntry.getValue()));
-        }
+        currentRank.stream()
+                .limit(resultSize)
+                .map(rankEntry -> String.format("%s\t%s", rankEntry.getKey().getName(), rankEntry.getValue()))
+                .forEach(System.out::println);
 
         System.out.println();
     }

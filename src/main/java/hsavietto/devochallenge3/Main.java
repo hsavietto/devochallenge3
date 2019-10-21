@@ -42,7 +42,7 @@ public class Main {
         try {
             return parser.parse(options, args);
         } catch (ParseException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             formatter.printHelp(" ", options);
             return null;
         }
@@ -59,7 +59,7 @@ public class Main {
         File docsDir = new File(docsDirPath);
 
         if (!docsDir.exists() || !docsDir.isDirectory()) {
-            System.out.println("\"" + docsDirPath + "\" is not a valid directory");
+            System.err.println("\"" + docsDirPath + "\" is not a valid directory");
             return null;
         }
 
@@ -79,7 +79,7 @@ public class Main {
         try {
             return Integer.parseInt(optionValue);
         } catch (NumberFormatException ex) {
-            System.out.println("\"" + optionValue + "\" is not a valid number");
+            System.err.println("\"" + optionValue + "\" is not a valid number");
             return null;
         }
     }
@@ -115,7 +115,7 @@ public class Main {
         List<String> terms = Arrays.asList(allTerms.split("\\s+"));
 
         if(terms.isEmpty()) {
-            System.out.println("Unable to find usable terms");
+            System.err.println("Unable to find usable terms");
         }
 
         return terms;
